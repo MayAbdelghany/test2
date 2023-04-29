@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Hello world!</title>
+</head>
+
+<body>
+    <h1>User List</h1>
+    <ul>
+        {{#each users}}
+
+        <li>Name: {{this.name}}</li>
+        <li>Age: {{this.age}}</li>
+        <br />
+        {{/each}}
+    </ul>
+    <img width="100%" src="data:image/png;base64,{{logo}}" alt="Logo" />
+
+</body>
+
+</html>

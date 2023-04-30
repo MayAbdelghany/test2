@@ -15,7 +15,7 @@ function createInvoice(invoice, path) {
 
 function generateHeader(doc) {
     doc
-        .image("https://res.cloudinary.com/dbocgux2p/image/upload/v1668112639/www38rqnkkb0dhzm1ihv.jpg", 50, 45, { width: 50 })
+        .image(path.join(__dirname, `logo.png`), 50, 45, { width: 50 })
         .fillColor("#444444")
         .fontSize(20)
         .text("ACME Inc.", 110, 57)

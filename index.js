@@ -46,23 +46,32 @@ app.get('/', async (req, res) => {
         paid: 0,
         invoice_nr: 1234,
     };
-    let pdf = await createInvoice(invoice, path.join(__dirname, './pdf/invoice.pdf'))
-    if (pdf) {
-        pdf.on('finish', function () {
-            // Upload the PDF to Cloudinary
-            cloudinary.uploader.upload(path.join(__dirname, './pdf/invoice5.pdf'),
-                { resource_type: 'raw' }, function (error, result) {
-                    if (error) {
-                        return res.json({ message: "error" })
+    // let pdf = await createInvoice(invoice, path.join(__dirname, './pdf/invoice.pdf'))
+    // if (pdf) {
+    //     pdf.on('finish', function () {
+    //         // Upload the PDF to Cloudinary
+    //         cloudinary.uploader.upload(path.join(__dirname, './pdf/invoice5.pdf'),
+    //             { resource_type: 'raw' }, function (error, result) {
+    //                 if (error) {
+    //                     return res.json({ message: "error" })
 
-                    } else {
-                        return res.json({ message: "done", result })
+    //                 } else {
+    //                     return res.json({ message: "done", result })
 
-                    }
-                });
+    //                 }
+    //             });
+    //     });
+    // }
+    cloudinary.uploader.upload(path.join(__dirname, './pdf/invoice5.pdf'),
+        { resource_type: 'raw' }, function (error, result) {
+            if (error) {
+                return res.json({ message: "error" })
+
+            } else {
+                return res.json({ message: "done", result })
+
+            }
         });
-    }
-
 
 
 })

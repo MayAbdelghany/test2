@@ -3,7 +3,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
-
+import os from 'os'
 import path from 'path'
 import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -46,20 +46,22 @@ app.get('/', async (req, res) => {
         paid: 0,
         invoice_nr: 1234,
     };
-    let pdf = await createInvoice(invoice, path.join(__dirname, './pdf/invoice.pdf'))
+    const tmpDir = os.tmpdir();
+    const tmpFile = `${tmpDir}/invoice.pdf`;
+    let pdf = await createInvoice(invoice, tmpFile)
     if (pdf) {
         pdf.on('finish', function () {
             // Upload the PDF to Cloudinary
-            cloudinary.uploader.upload(path.join(__dirname, './pdf/invoice.pdf'),
-                { resource_type: 'raw' }, function (error, result) {
-                    if (error) {
-                        return res.json({ message: "error" })
+            cloudinary.uploader.upload(tmpFile, { resource_type: 'raw' }, function (error, result) {
+                if (error) {
+                    return res.json({ message: "error" })
 
-                    } else {
-                        return res.json({ message: "done", result })
+                } else {
+                    return res.json({ message: "done", result })
 
-                    }
-                });
+                }
+            });
+
         });
     }
 

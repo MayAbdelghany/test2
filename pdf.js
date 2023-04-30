@@ -3,7 +3,7 @@ import PDFDocument from "pdfkit";
 import path from 'path'
 import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-function createInvoice(invoice, path) {
+async function createInvoice(invoice, path) {
     let doc = new PDFDocument({ size: "A4", margin: 50 });
 
     generateHeader(doc);
@@ -12,7 +12,7 @@ function createInvoice(invoice, path) {
     generateFooter(doc);
 
     doc.end();
-    doc.pipe(fs.createWriteStream(path));
+    return doc.pipe(fs.createWriteStream(path));
 }
 
 function generateHeader(doc) {

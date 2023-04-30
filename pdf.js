@@ -16,7 +16,7 @@ async function createInvoice(invoice, path) {
 
 function generateHeader(doc) {
     doc
-        .image(path.join(__dirname, `logo.png`), 50, 45, { width: 50 })
+        .image(path.join(__dirname, `./logo.png`), 50, 45, { width: 50 })
         .fillColor("#444444")
         .fontSize(20)
         .text("ACME Inc.", 110, 57)

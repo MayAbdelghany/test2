@@ -10,7 +10,6 @@ async function createInvoice(invoice, path) {
     generateCustomerInformation(doc, invoice);
     generateInvoiceTable(doc, invoice);
     generateFooter(doc);
-
     doc.end();
     return doc.pipe(fs.createWriteStream(path));
 }

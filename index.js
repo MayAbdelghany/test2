@@ -46,11 +46,11 @@ app.get('/', async (req, res) => {
         paid: 0,
         invoice_nr: 1234,
     };
-    let pdf = await createInvoice(invoice, path.join(__dirname, `invoice.pdf`))
+    let pdf = await createInvoice(invoice, path.join(__dirname, './tmp/invoice.pdf'))
     if (pdf) {
         pdf.on('finish', function () {
             // Upload the PDF to Cloudinary
-            cloudinary.uploader.upload(path.join(__dirname, `invoice.pdf`), { resource_type: 'raw' }, function (error, result) {
+            cloudinary.uploader.upload(path.join(__dirname, './tmp/invoice.pdf'), { resource_type: 'raw' }, function (error, result) {
                 if (error) {
                     return res.json({ message: "error" })
 

@@ -50,16 +50,16 @@ app.get('/', async (req, res) => {
     if (pdf) {
         pdf.on('finish', function () {
             // Upload the PDF to Cloudinary
-            cloudinary.uploader.upload(path.join(__dirname, './pdf/invoice.pdf'), { resource_type: 'raw' }, function (error, result) {
-                if (error) {
-                    return res.json({ message: "error" })
+            cloudinary.uploader.upload(path.join(__dirname, './pdf/invoice5.pdf'),
+                { resource_type: 'raw' }, function (error, result) {
+                    if (error) {
+                        return res.json({ message: "error" })
 
-                } else {
-                    return res.json({ message: "done", result })
+                    } else {
+                        return res.json({ message: "done", result })
 
-                }
-            });
-
+                    }
+                });
         });
     }
 

@@ -4,7 +4,8 @@ import cloudinary from 'cloudinary';
 cloudinary.v2.config({
     cloud_name: 'dbocgux2p',
     api_key: '182659629255193',
-    api_secret: 'wVqWLviAij-ry8hQO5ecVqDzaps'
+    api_secret: 'wVqWLviAij-ry8hQO5ecVqDzaps',
+    secure:true
 });
 export default cloudinary.v2;
 

@@ -26,25 +26,25 @@ app.get('/', async (req, res) => {
             city: 'San Francisco',
             state: 'CA',
             country: 'US',
-            postal_code: 94111,
+            postal_code: 200,
         },
         items: [
             {
                 item: 'TC 100',
                 description: 'Toner Cartridge',
                 quantity: 2,
-                amount: 6000,
+                amount: 300,
             },
             {
                 item: 'USB_EXT',
                 description: 'USB Cable Extender',
                 quantity: 1,
-                amount: 2000,
+                amount: 400,
             },
         ],
-        subtotal: 8000,
+        subtotal: 9000,
         paid: 0,
-        invoice_nr: 1234,
+        invoice_nr: 12546,
     };
     const tmpDir = os.tmpdir();
     const tmpFile = `${tmpDir}/invoice.pdf`;

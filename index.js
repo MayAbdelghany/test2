@@ -20,59 +20,56 @@ const port = process.env.port
 
 
 app.get('/', async (req, res) => {
-    const invoice = {
-        shipping: {
-            name: 'John Doe',
-            address: '1234 Main Street',
-            city: 'San Francisco',
-            state: 'CA',
-            country: 'US',
-            postal_code: 200,
-        },
-        items: [
-            {
-                item: 'TC 100',
-                description: 'Toner Cartridge',
-                quantity: 2,
-                amount: 300,
+    try {
+        const invoice = {
+            shipping: {
+                name: 'John Doe',
+                address: '1234 Main Street',
+                city: 'San Francisco',
+                state: 'CA',
+                country: 'US',
+                postal_code: 94111,
             },
-            {
-                item: 'USB_EXT',
-                description: 'USB Cable Extender',
-                quantity: 1,
-                amount: 400,
-            },
-        ],
-        subtotal: 9000,
-        paid: 0,
-        invoice_nr: 12546,
-    };
-    const tmpDir = os.tmpdir();
-    const tmpFile = `${tmpDir}/invoice.pdf`;
-    let pdf = await createInvoice(invoice, tmpFile)
-    if (pdf) {
-        pdf.on('finish', function () {
-            // Upload the PDF to Cloudinary
-            cloudinary.uploader.upload(tmpFile, { resource_type: 'raw' }, function (error, result) {
-                fs.unlink(tmpFile, (err) => {
-                    if (!err) {
-                        console.log("done");
+            items: [
+                {
+                    item: 'TC 100',
+                    description: 'Toner Cartridge',
+                    quantity: 2,
+                    amount: 6000,
+                },
+                {
+                    item: 'USB_EXT',
+                    description: 'USB Cable Extender',
+                    quantity: 1,
+                    amount: 2000,
+                },
+            ],
+            subtotal: 8000,
+            paid: 0,
+            invoice_nr: 1234,
+        };
+        const tmpDir = os.tmpdir();
+        const tmpFile = `${tmpDir}/invoice.pdf`;
+        let pdf = await createInvoice(invoice, tmpFile)
+        pdf.on('finish', async function () {
+
+            let { secure_url, public_id } = await cloudinary.uploader.upload(tmpFile, { resource_type: 'raw' })
+            fs.unlink(tmpFile, (err) => {
+                if (!err) {
+                    if (fs.existsSync(tmpFile)) {
+                        console.log('File exists');
                     } else {
-                        console.log(err);
+                        console.log('File does not exist');
                     }
-                })
-                if (error) {
-                    return res.json({ message: "error" })
                 } else {
-                    return res.json({ message: "done", result })
+                    console.log(err);
                 }
-            });
-
+            })
+            return res.json({ message: "done", result: { secure_url, public_id } })
         });
+    } catch (error) {
+        return res.json({ message: "catch error", error })
     }
-
-
-
 })
 
 app.listen(port, () => console.log(`runing in port 3000`))

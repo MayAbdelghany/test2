@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import os from 'os'
 import path from 'path'
+import fs from 'fs'
 import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 import cloudinary from './cloudinary.js';
@@ -53,12 +54,17 @@ app.get('/', async (req, res) => {
         pdf.on('finish', function () {
             // Upload the PDF to Cloudinary
             cloudinary.uploader.upload(tmpFile, { resource_type: 'raw' }, function (error, result) {
+                fs.unlink(tmpFile, (err) => {
+                    if (!err) {
+                        console.log("done");
+                    } else {
+                        console.log(err);
+                    }
+                })
                 if (error) {
                     return res.json({ message: "error" })
-
                 } else {
                     return res.json({ message: "done", result })
-
                 }
             });
 

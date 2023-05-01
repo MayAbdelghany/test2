@@ -172,7 +172,6 @@ app.get('/pdf', async (req, res) => {
     await pdf.create(document, options)
     let { secure_url, public_id } = await cloudinary.uploader.upload(path.join(__dirname, "./uploade.pdf"), { resource_type: 'raw' })
     res.json({ message: "done", result: { secure_url, public_id } })
-
 })
 
 app.listen(port, () => console.log(`runing in port 3000`))
